@@ -33,8 +33,11 @@ const router = createBrowserRouter([{
 //   height: 100vh;
 // `;
 
+// const name = "김";
+// `내 이름은 ${name}이야`;
+
 const Container = styled.div`
-  background-color: orange;
+  background-color: black;
   width:100vw;
   height:100vh;
 `;
