@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import styled from "styled-components";
 import { auth } from "../firebaseConfig";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 
 // styled-component를 통한 css구성
@@ -11,17 +11,22 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  align-items: center;
   padding: 30px;
 `;
 
 // 화면 타이틀 텍스트
 const Title = styled.h1`
   color: white;
+  font-size: 25px;
+  font-weight: 600;
 `;
 
 // 화면 타이틀 로고(이미지)
-const Logo = styled.img``;
+const Logo = styled.img`
+  width: 400px;
+  height: 200px;
+`;
 
 // ID/PW Input Field(Form)
 // ㄴ1. Form (텍스트 인풋 필드를 담을 공간)
@@ -29,6 +34,7 @@ const Form = styled.form`
   margin-top: 30px;
   display: flex;
   flex-direction: column;
+  width: 400px;
 `;
 
 // ㄴ2. 각각(id, pw)의 Input Field
@@ -36,7 +42,7 @@ const Input = styled.input`
   padding: 10px 15px;
   border-radius: 10px;
   border: none;
-  width: 100%;
+  /* width: 100%; */
   &::placeholder {
     font-size: 0.8em;
   }
@@ -47,7 +53,9 @@ const Input = styled.input`
 `;
 const InputTitle = styled.p`
   color: white;
-  font-size: 10px;
+  font-size: 8px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 `;
 
 // 회원가입 버튼
@@ -55,7 +63,7 @@ const SignupBtn = styled.div`
   padding: 10px 15px;
   background-color: #4384fd;
   border-radius: 20px;
-  width: 100%;
+  /* width: 100%; */
   cursor: pointer;
   margin-top: 20px;
   display: flex;
@@ -70,6 +78,17 @@ const ErrorMsg = styled.p`
   font-weight: 600;
   font-size: 10px;
   text-align: center;
+`;
+
+// 로그인 페이지 이동을 위한 Guide
+const Guide = styled.span`
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  a {
+    color: #49eb08;
+    font-weight: bold;
+  }
 `;
 
 // 실제 페이지를 구성하는 code
@@ -160,8 +179,8 @@ export default () => {
   //위에 onChange랑 다름 ex) 내꺼 니꺼 폰 기종은 같아도 다름
   return (
     <Container>
-      <Logo />
-      <Title>회원가입</Title>
+      <Logo src={`${process.env.PUBLIC_URL}/DaelimX_Title.png`} />
+      {/* <Title>회원가입</Title> */}
       <Form>
         <InputTitle>닉네임*</InputTitle>
         <Input
@@ -191,6 +210,9 @@ export default () => {
           {loading ? "로딩중..." : "가입하기"}
         </SignupBtn>
         <ErrorMsg>{error}</ErrorMsg>
+        <Guide>
+          이미 계정이 있으신가요? <Link to="/signin">로그인</Link>
+        </Guide>
       </Form>
     </Container>
   );
