@@ -9,28 +9,28 @@ import reset from "styled-reset";
 import { auth } from "./firebaseConfig";
 import LoadingScreen from "./screens/loading-screen";
 import ProtectedRouter from "./components/protected-router";
+import Layout from "./screens/layout";
+import ErrorRouterScreen from "./screens/errorRouterScreen";
 
 //react-router-dom을 활용한 Page 관리
 // - Page : home, Profile, signin, signup
 const router = createBrowserRouter([
   {
     path: "/",
+    element: (
+      <ProtectedRouter>
+        <Layout />
+      </ProtectedRouter>
+    ),
+    errorElement: <ErrorRouterScreen />,
     children: [
       {
         path: "",
-        element: (
-          <ProtectedRouter>
-            <Home />
-          </ProtectedRouter>
-        ),
+        element: <Home />,
       },
       {
         path: "profile",
-        element: (
-          <ProtectedRouter>
-            <Profile />
-          </ProtectedRouter>
-        ),
+        element: <Profile />,
       },
     ],
   },
