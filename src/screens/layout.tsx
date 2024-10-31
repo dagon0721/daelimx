@@ -1,13 +1,15 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { maxWidthWindow } from "../css/cssUtils";
+import { auth } from "../firebaseConfig";
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 8fr;
   /* max-width: ${maxWidthWindow}px; */
-  height: 100%;
+  /* height: 100%; */
   padding: 20px 0px;
+  width: 100%;
 `;
 
 const Menu = styled.div`
@@ -36,12 +38,29 @@ const MenuItem = styled.div`
   svg {
     width: 40px;
     height: 40px;
+    color: white;
   }
 `;
 
 const Content = styled.div``;
 
 export default () => {
+  const navi = useNavigate();
+
+  // Page Logic Rendering
+  // - 로그아웃 함수
+  const signOut = () => {
+    // 알림창을 통해서 진짜 로그아웃 할 것인지 하고 나서
+    const isOK = window.confirm("로그아웃 하시겠습니까?");
+    if (isOK) {
+      // 로그아웃
+      auth.signOut();
+      // 로그아웃 후 홈 화면으로 이동
+      navi("/signin");
+    }
+  };
+
+  // Page Design Rendering
   return (
     <Container>
       <Menu>
@@ -92,7 +111,7 @@ export default () => {
         {/* 하단 메뉴 */}
         <BottomMenu>
           {/* 로그아웃 메뉴 */}
-          <MenuItem>
+          <MenuItem onClick={signOut}>
             <svg
               className="w-6 h-6 text-gray-800 dark:text-white"
               aria-hidden="true"

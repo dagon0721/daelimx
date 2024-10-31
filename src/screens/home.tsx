@@ -1,6 +1,7 @@
 // home 화면을 구성
 import styled from "styled-components";
 import { auth } from "../firebaseConfig";
+import PostInput from "../components/PostInput";
 // styled-component를 통한 css구성
 const Container = styled.div``;
 const Title = styled.h1`
@@ -16,7 +17,8 @@ export default () => {
   return (
     <Container>
       <Title>Home</Title>
-      <button onClick={signOut}>로그아웃</button>
+      {/* 게시글 작성하기 */}
+      <PostInput />
     </Container>
   );
 };
